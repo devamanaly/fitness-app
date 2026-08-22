@@ -1,82 +1,77 @@
-import { LucideIcon } from 'lucide-react'
+import Image from 'next/image'
+import { Target, TrendingUp, Trophy } from 'lucide-react'
 import { STEP_VISUALS } from '@/constants/onboarding.constants'
 import { OnboardingStepKey } from '@/types/onboarding'
-
+import pic from '../../../public/onboarding/eNuZh.jpg'
 type OnboardingVisualPanelProps = {
   stepKey: OnboardingStepKey
-  icon: LucideIcon
   stepNumber: number
   totalSteps: number
 }
 
-export function OnboardingVisualPanel({ stepKey, icon: Icon, stepNumber, totalSteps }: OnboardingVisualPanelProps) {
+const FEATURES = [
+  { icon: Target, title: 'Personalized', subtitle: 'Plans just for you' },
+  { icon: TrendingUp, title: 'AI Powered', subtitle: 'Smarter every day' },
+  { icon: Trophy, title: 'Stay Consistent', subtitle: 'Track. Improve. Achieve.' },
+]
+
+export function OnboardingVisualPanel({ stepKey, stepNumber, totalSteps }: OnboardingVisualPanelProps) {
   const visual = STEP_VISUALS[stepKey]
 
   return (
-    <div className="relative hidden lg:flex lg:flex-col lg:justify-between overflow-hidden bg-[#0d0d0e] border-r border-white/[0.06] px-10 py-12 w-[420px] shrink-0">
-      {/* faint dot grid texture */}
-      <div
-        className="absolute inset-0 opacity-[0.15]"
-        style={{ backgroundImage: 'radial-gradient(circle, #3f3f46 1px, transparent 1px)', backgroundSize: '24px 24px' }}
+    <div className="relative hidden lg:flex lg:flex-col justify-between overflow-hidden w-[420px] xl:w-[480px] 2xl:w-[560px] 3xl:w-[640px] shrink-0 h-screen sticky top-0">
+      {/* background photo */}
+      <Image
+        src={pic}
+        alt=""
+        fill
+        priority
+        className="object-cover object-center"
+        sizes="(min-width: 1536px) 600px, (min-width: 1280px) 480px, 420px"
       />
+      {/* gradient overlay for legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent" />
 
       {/* top: brand mark */}
-      <div className="relative z-10">
-        <span className="text-white font-[family-name:var(--font-oswald)] tracking-widest text-sm uppercase">
+      <div className="relative z-10 px-8 xl:px-10 2xl:px-12 pt-10">
+        <span className="text-white font-[family-name:var(--font-oswald)] tracking-widest text-sm 2xl:text-base uppercase">
           FitJourney <span className="text-red-500">AI</span>
         </span>
       </div>
 
-      {/* center: icon + heartbeat pulse */}
-      <div className="relative z-10 flex flex-col items-start gap-8">
-        <div className="relative w-20 h-20 rounded-2xl bg-red-600/10 border border-red-500/20 flex items-center justify-center">
-          <Icon className="w-9 h-9 text-red-500" strokeWidth={1.5} />
+      {/* bottom: headline + features + step dots */}
+      <div className="relative z-10 px-8 xl:px-10 2xl:px-12 pb-10 2xl:pb-12">
+        <h2 className="text-4xl 2xl:text-5xl font-[family-name:var(--font-oswald)] font-bold text-white leading-[1.05] mb-3">
+          {visual.tagline.split(' ').slice(0, -1).join(' ')}{' '}
+          <span className="text-red-500">{visual.tagline.split(' ').slice(-1)}</span>
+        </h2>
+        <p className="text-gray-300 text-sm 2xl:text-base leading-relaxed max-w-[320px] mb-8">
+          {visual.caption}
+        </p>
+
+        <div className="grid grid-cols-3 gap-3 mb-8">
+          {FEATURES.map(({ icon: Icon, title, subtitle }) => (
+            <div key={title} className="bg-white/[0.04] border border-white/[0.08] rounded-xl p-3 backdrop-blur-sm">
+              <div className="w-8 h-8 rounded-lg bg-red-600/15 border border-red-500/20 flex items-center justify-center mb-2">
+                <Icon className="w-4 h-4 text-red-500" />
+              </div>
+              <p className="text-white text-xs font-semibold leading-tight">{title}</p>
+              <p className="text-gray-500 text-[11px] leading-tight">{subtitle}</p>
+            </div>
+          ))}
         </div>
 
-        <div>
-          <h2 className="text-3xl font-[family-name:var(--font-oswald)] font-semibold text-white leading-tight mb-3">
-            {visual.tagline}
-          </h2>
-          <p className="text-gray-500 text-sm leading-relaxed max-w-[280px]">
-            {visual.caption}
-          </p>
+        <div className="flex items-center gap-1.5">
+          {Array.from({ length: totalSteps }).map((_, i) => (
+            <div
+              key={i}
+              className={`h-1 rounded-full transition-all duration-300 ${
+                i === stepNumber ? 'w-6 bg-red-500' : i < stepNumber ? 'w-1.5 bg-red-500/40' : 'w-1.5 bg-white/20'
+              }`}
+            />
+          ))}
         </div>
-
-        {/* animated heartbeat pulse — the brand signature */}
-        <svg className="w-full max-w-[280px] h-10" viewBox="0 0 280 40" fill="none" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id={`pulse-${stepKey}`} x1="0" y1="0" x2="280" y2="0">
-              <stop offset="0%" stopColor="#3f3f46" stopOpacity="0" />
-              <stop offset="35%" stopColor="#52525b" />
-              <stop offset="50%" stopColor="#ef4444" />
-              <stop offset="65%" stopColor="#52525b" />
-              <stop offset="100%" stopColor="#3f3f46" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-          <path
-            key={stepKey}
-            d="M0 20 H105 L113 5 L121 35 L129 12 L137 20 H280"
-            stroke={`url(#pulse-${stepKey})`}
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeDasharray="220"
-            className="[animation:pulse-draw_1.2s_ease-out_forwards]"
-          />
-          <circle cx="121" cy="35" r="2.5" fill="#ef4444" className="[animation:glow-dot_2s_ease-in-out_infinite]" />
-        </svg>
-      </div>
-
-      {/* bottom: step dots */}
-      <div className="relative z-10 flex items-center gap-1.5">
-        {Array.from({ length: totalSteps }).map((_, i) => (
-          <div
-            key={i}
-            className={`h-1 rounded-full transition-all duration-300 ${
-              i === stepNumber ? 'w-6 bg-red-500' : i < stepNumber ? 'w-1.5 bg-red-500/40' : 'w-1.5 bg-white/10'
-            }`}
-          />
-        ))}
       </div>
     </div>
   )

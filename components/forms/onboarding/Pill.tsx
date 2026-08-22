@@ -1,13 +1,10 @@
-// components/forms/onboarding/Pill.tsx
-'use client'
-
-import { Check } from 'lucide-react'
+import { ReactNode } from 'react'
 
 type PillProps = {
   label: string
   active: boolean
   onClick: () => void
-  icon?: React.ReactNode
+  icon?: ReactNode
   description?: string
 }
 
@@ -16,25 +13,17 @@ export function Pill({ label, active, onClick, icon, description }: PillProps) {
     <button
       type="button"
       onClick={onClick}
-      className={`
-        relative flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium
-        border transition-all duration-200 text-left
-        ${active 
-          ? 'bg-red-600/15 border-red-500/50 text-red-400 shadow-lg shadow-red-500/10' 
-          : 'bg-white/[0.02] border-white/[0.08] text-gray-400 hover:border-white/20 hover:bg-white/[0.04] hover:text-gray-300'
-        }
-      `}
+      className={`flex items-start gap-3 px-4 py-3.5 rounded-xl border text-left transition-all duration-150 ${
+        active
+          ? 'bg-red-600/15 border-red-500 text-red-400'
+          : 'bg-white/[0.02] border-white/[0.08] text-gray-400 hover:border-white/20 hover:bg-white/[0.04]'
+      }`}
     >
-      {icon && <span className="flex-shrink-0">{icon}</span>}
-      <span className="flex-1">
-        {label}
-        {description && (
-          <span className="block text-xs text-gray-500 mt-0.5">{description}</span>
-        )}
+      {icon && <span className={active ? 'text-red-500' : 'text-gray-600'}>{icon}</span>}
+      <span>
+        <span className="block text-sm font-medium text-white">{label}</span>
+        {description && <span className="block text-xs text-gray-500 mt-0.5">{description}</span>}
       </span>
-      {active && (
-        <Check className="w-4 h-4 text-red-500 flex-shrink-0" strokeWidth={2.5} />
-      )}
     </button>
   )
 }

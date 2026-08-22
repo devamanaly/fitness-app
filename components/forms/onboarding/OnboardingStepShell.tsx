@@ -4,7 +4,7 @@
 import { ChevronLeft, ChevronRight, Loader2, Lock } from 'lucide-react'
 
 type OnboardingStepShellProps = {
-  icon: React.ReactNode
+  // icon: React.ReactNode
   title: string
   subtitle?: string
   error: string
