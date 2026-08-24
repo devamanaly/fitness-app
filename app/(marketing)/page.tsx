@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 // app/page.js
 import Link from 'next/link'
 import { ArrowRight, Dumbbell, Target, Brain, Zap, Users, Trophy, Star } from 'lucide-react'
@@ -22,10 +23,10 @@ export default function Home() {
             <div className="hidden md:flex items-center space-x-8">
               <a href="#features" className="text-gray-300 hover:text-red-500 transition-colors">Features</a>
               <a href="#how-it-works" className="text-gray-300 hover:text-red-500 transition-colors">How It Works</a>
-              <a href="#testimonials" className="text-gray-300 hover:text-red-500 transition-colors">Testimonials</a>
+              <a href="#ai-coach" className="text-gray-300 hover:text-red-500 transition-colors">AI Coach</a>
               <Link href="/login" className="text-gray-300 hover:text-red-500 transition-colors">Login</Link>
-              <Link href="/register" className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-red-600/25">
-                Start Free
+              <Link href="/signup" className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-red-600/25">
+                Get Started
               </Link>
             </div>
           </div>
@@ -46,48 +47,34 @@ export default function Home() {
             {/* Badge */}
             <div className="inline-flex items-center space-x-2 bg-red-600/10 border border-red-600/20 rounded-full px-4 py-2 animate-pulse-red">
               <Zap className="w-4 h-4 text-red-500" />
-              <span className="text-sm text-red-400">AI-Powered Fitness Coaching</span>
+              <span className="text-sm text-red-400">Your Personal AI Fitness Coach</span>
             </div>
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
               <span className="bg-gradient-to-r from-white via-red-100 to-red-500 bg-clip-text text-transparent">
-                Your Personal AI
+                Fitness Coaching
               </span>
               <br />
-              <span className="text-white">Fitness Coach</span>
+              <span className="text-white">That Actually Understands You</span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              Experience fitness coaching that remembers, adapts, and grows with you. 
-              Not just another workout app—your intelligent companion on the journey to lasting health.
+              FitJourney AI remembers your history, adapts to your lifestyle, and guides you 
+              every step of the way. Not just another workout app—your intelligent companion 
+              on the journey to lasting health.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link href="/register" className="group bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:shadow-2xl hover:shadow-red-600/25 inline-flex items-center space-x-2">
-                <span>Start Your Journey</span>
+              <Link href="/signup" className="group bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all hover:shadow-2xl hover:shadow-red-600/25 inline-flex items-center space-x-2">
+                <span>Begin Your Journey</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link href="#features" className="text-gray-300 hover:text-white px-8 py-4 rounded-xl font-semibold text-lg border border-gray-700 hover:border-red-600 transition-all">
-                Learn More
+                Explore Features
               </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto pt-12">
-              {[
-                { value: '10K+', label: 'Active Users' },
-                { value: '95%', label: 'Satisfaction Rate' },
-                { value: '50K+', label: 'Goals Achieved' },
-                { value: '24/7', label: 'AI Coaching' },
-              ].map((stat) => (
-                <div key={stat.label} className="space-y-1">
-                  <div className="text-3xl font-bold text-red-500">{stat.value}</div>
-                  <div className="text-sm text-gray-500">{stat.label}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
@@ -98,10 +85,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Why <span className="text-red-500">FitJourney AI</span>?
+              Built Different <span className="text-red-500">On Purpose</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Unlike traditional fitness apps, our AI coach remembers, learns, and adapts to you.
+              Most fitness apps give you a plan and forget about you. FitJourney AI evolves with you.
             </p>
           </div>
 
@@ -110,32 +97,32 @@ export default function Home() {
               {
                 icon: <Brain className="w-6 h-6" />,
                 title: 'Memory That Matters',
-                description: 'Remembers your injuries, preferences, and history. Get recommendations that actually make sense for you.',
+                description: 'Remembers your injuries, preferences, and history. When you mention knee pain in week one, it still matters in week twelve.',
               },
               {
                 icon: <Target className="w-6 h-6" />,
                 title: 'Adaptive Plans',
-                description: 'Plans evolve based on your progress. Missed workouts? The AI adjusts instead of resetting your streak.',
+                description: 'Your plan changes as your life changes. Busy week? The AI adjusts your workouts instead of making you feel guilty.',
               },
               {
                 icon: <Trophy className="w-6 h-6" />,
-                title: 'Habit Building',
-                description: 'Focus on consistency, not perfection. Streak freezes and encouraging nudges keep you on track.',
+                title: 'Habit Building Focus',
+                description: 'We care about consistency, not perfection. Streak freezes and gentle nudges help you build habits that last.',
               },
               {
                 icon: <Users className="w-6 h-6" />,
-                title: 'Personal AI Coach',
-                description: 'Like having a personal trainer for a fraction of the cost. Available 24/7 when you need guidance.',
+                title: 'Always Available Coach',
+                description: 'Need guidance at 6 AM or midnight? Your AI coach is there whenever you need support or motivation.',
               },
               {
                 icon: <Star className="w-6 h-6" />,
-                title: 'Weekly Insights',
-                description: 'Detailed weekly and monthly reviews help you understand your progress and areas for improvement.',
+                title: 'Insightful Reviews',
+                description: 'Weekly and monthly summaries show your progress, celebrate wins, and suggest what to focus on next.',
               },
               {
                 icon: <Zap className="w-6 h-6" />,
-                title: 'Smart Notifications',
-                description: 'Timely, relevant reminders that feel like a coach checking in—not spam.',
+                title: 'Smart Reminders',
+                description: 'Notifications that feel like a coach checking in—timely, relevant, and never spammy.',
               },
             ].map((feature, index) => (
               <div
@@ -164,7 +151,7 @@ export default function Home() {
               Your Journey <span className="text-red-500">Starts Here</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Four simple steps to transform your fitness journey with AI-powered coaching.
+              Simple steps to transform your fitness journey with AI-powered guidance.
             </p>
           </div>
 
@@ -173,22 +160,22 @@ export default function Home() {
               {
                 step: '01',
                 title: 'Create Account',
-                description: 'Sign up in seconds with email or Google. No lengthy forms required.',
+                description: 'Sign up with email or Google. Takes less than a minute.',
               },
               {
                 step: '02',
-                title: 'AI Onboarding',
-                description: 'Answer simple questions about your goals, lifestyle, and preferences.',
+                title: 'Meet Your AI Coach',
+                description: 'Answer questions about your goals, lifestyle, and preferences.',
               },
               {
                 step: '03',
                 title: 'Get Your Plan',
-                description: 'AI creates a personalized plan tailored to your unique needs and goals.',
+                description: 'AI creates a personalized plan tailored to your unique needs.',
               },
               {
                 step: '04',
-                title: 'Daily Check-ins',
-                description: 'Log your progress daily. The AI adapts your plan as you evolve.',
+                title: 'Grow Together',
+                description: 'Log daily check-ins. The AI adapts your plan as you evolve.',
               },
             ].map((step, index) => (
               <div key={index} className="relative">
@@ -209,7 +196,7 @@ export default function Home() {
       </section>
 
       {/* AI Coach Demo Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <section id="ai-coach" className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(220,38,38,0.1),transparent_70%)]" />
         <div className="max-w-7xl mx-auto relative">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -218,13 +205,18 @@ export default function Home() {
                 An AI Coach That{' '}
                 <span className="text-red-500">Remembers You</span>
               </h2>
+              <p className="text-gray-400 mb-8">
+                This is what makes FitJourney AI different. Your coach doesn't forget—it remembers 
+                every detail of your journey and uses that knowledge to guide you better.
+              </p>
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
                   <div className="w-6 h-6 bg-red-600/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
                     <div className="w-2 h-2 bg-red-500 rounded-full" />
                   </div>
                   <p className="text-gray-300">
-                    <span className="text-white font-semibold">Week 1:</span> {"My knee hurts. — AI remembers this ermanently."}
+                    <span className="text-white font-semibold">Week 1:</span>{" "}
+                    "My knee hurts." — AI remembers this permanently.
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -232,15 +224,17 @@ export default function Home() {
                     <div className="w-2 h-2 bg-red-500 rounded-full" />
                   </div>
                   <p className="text-gray-300">
-                    <span className="text-white font-semibold">Week 3:</span> 
-                  {"  Can I start running? — AI recalls your knee issue and suggests alternatives."}                  </p>
+                    <span className="text-white font-semibold">Week 3:</span>{" "}
+                    "Can I start running?" — AI recalls your knee issue and suggests alternatives.
+                  </p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-6 h-6 bg-red-600/20 rounded-full flex items-center justify-center mt-1 flex-shrink-0">
                     <div className="w-2 h-2 bg-red-500 rounded-full" />
                   </div>
                   <p className="text-gray-300">
-                    <span className="text-white font-semibold">Always:</span> Your coach knows your history, preferences, and journey context.
+                    <span className="text-white font-semibold">Always:</span>{" "}
+                    Your coach knows your history, preferences, and journey context.
                   </p>
                 </div>
               </div>
@@ -262,7 +256,9 @@ export default function Home() {
                 </div>
                 <div className="flex justify-start">
                   <div className="bg-gray-800 text-gray-200 rounded-2xl rounded-bl-none px-4 py-2 max-w-[80%]">
-{"                    I remember you mentioned knee pain earlier. Let's start with walking and low-impact exercises before progressing to running. How about a 20-minute walk today?"}                  </div>
+                    I remember you mentioned knee pain earlier. Let's start with walking and 
+                    low-impact exercises before progressing to running. How about a 20-minute walk today?
+                  </div>
                 </div>
                 <div className="flex justify-end">
                   <div className="bg-red-600/20 text-white rounded-2xl rounded-br-none px-4 py-2 max-w-[80%]">
@@ -275,21 +271,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Final CTA Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center relative">
           <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 via-red-600/10 to-red-600/20 rounded-3xl blur-3xl" />
           <div className="relative bg-gradient-to-b from-gray-900 to-black border border-gray-800 rounded-3xl p-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Ready to <span className="text-red-500">Transform</span>?
+              Start Your <span className="text-red-500">Transformation</span>
             </h2>
-            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">{"Join thousands who've already started their AI-powered fitness journey.Your personal coach is waiting."}
+            <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+              Your AI coach is ready when you are. Take the first step today.
             </p>
             <Link
-              href="/register"
+              href="/signup"
               className="inline-flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-10 py-4 rounded-xl font-semibold text-lg transition-all hover:shadow-2xl hover:shadow-red-600/25"
             >
-              <span>Start Free Today</span>
+              <span>Get Started Now</span>
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
