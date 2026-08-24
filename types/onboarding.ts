@@ -1,4 +1,5 @@
 export type OnboardingFormData = {
+    // name:string;
     age: string
     gender: string
     currentWeight: string

@@ -31,7 +31,7 @@ export function useOnboardingForm() {
   const isStepValid = () => {
     switch (ONBOARDING_STEPS[step].key) {
       case "basics":
-        return !!data.age && !!data.gender;
+        return  !!data.age && !!data.gender && Number(data.age) < 80;
       case "body":
         return !!data.currentWeight && !!data.targetWeight && !!data.height;
       case "goal":
@@ -81,14 +81,14 @@ export function useOnboardingForm() {
       return;
     }
 
-    router.push("/onboarding/avatar");
+    router.push("/dashboard");
     router.refresh();
   };
 
   const goNext = () => {
     setError("");
     if (!isStepValid()) {
-      setError("Please fill in this step before continuing");
+      setError("Please fill in this step before continuing or ");
       return;
     }
     if (step < ONBOARDING_STEPS.length - 1) setStep((s) => s + 1);

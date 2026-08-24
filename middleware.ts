@@ -32,7 +32,13 @@ export async function middleware(request: NextRequest) {
     pathname.startsWith('/forgot-password') ||
     pathname.startsWith('/verify-email') ||
     pathname.startsWith('/reset-password')
-
+    const isMarketingPage =
+    pathname === '/' ||
+    pathname.startsWith('/about') ||
+    pathname.startsWith('/pricing') ||
+    pathname.startsWith('/features') ||
+    pathname.startsWith('/contact')
+   
   const isDashboardPage = pathname.startsWith('/dashboard')
   const isOnboardingPage = pathname.startsWith('/onboarding')
 
@@ -43,14 +49,14 @@ export async function middleware(request: NextRequest) {
 
   // For logged-in users hitting auth pages or protected pages,
   // we need to know their onboarding status to route correctly
-  if (user && (isAuthPage || isDashboardPage || isOnboardingPage)) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('onboarding_completed')
-      .eq('id', user.id)
-      .single()
-
-    const onboardingDone = profile?.onboarding_completed ?? false
+  if (user && ( isAuthPage || isMarketingPage || isDashboardPage || isOnboardingPage)) {
+    const { data: onboarding } = await supabase
+    .from('onboarding_data')
+    .select('id')
+    .eq('user_id', user.id)
+    .maybeSingle()
+  
+  const onboardingDone = !!onboarding
 
     // Logged in + hitting login/signup → send to the right place
     if (isAuthPage) {
@@ -58,12 +64,16 @@ export async function middleware(request: NextRequest) {
         new URL(onboardingDone ? '/dashboard' : '/onboarding/details', request.url)
       )
     }
-
+    
+    // if()
     // Logged in but hasn't finished onboarding → block dashboard access
     if (isDashboardPage && !onboardingDone) {
       return NextResponse.redirect(new URL('/onboarding/details', request.url))
     }
 
+    if (isMarketingPage && onboardingDone) {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
     // Already finished onboarding → don't let them redo it
     if (isOnboardingPage && onboardingDone) {
       return NextResponse.redirect(new URL('/dashboard', request.url))
