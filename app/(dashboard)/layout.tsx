@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 // app/(dashboard)/layout.tsx
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
@@ -25,6 +26,8 @@ import {
   Trophy,
   Target
 } from 'lucide-react'
+import { logout } from '@/hooks/logout'
+import { Loader } from '@/components/Ui/Loader'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -56,6 +59,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [notificationOpen, setNotificationOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isRouteLoading, setIsRouteLoading] = useState(false)
 
   useEffect(() => {
     const handleResize = () => {
@@ -70,15 +74,29 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  // Route change loading
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsRouteLoading(true)
+    const timer = setTimeout(() => {
+      setIsRouteLoading(false)
+    }, 500) // Simulate loading time
+
+    return () => clearTimeout(timer)
+  }, [pathname])
+
+  useEffect(() => {
     setSidebarOpen(false)
     setUserMenuOpen(false)
     setNotificationOpen(false)
   }, [pathname])
 
-  const handleLogout = () => {
-    router.push('/login')
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push('/login')
+    } catch (error) {
+      alert('Failed to log out. Please try again.')
+    }
   }
 
   return (
@@ -233,7 +251,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <div className="hidden sm:flex items-center space-x-2">
                 <Home className="w-4 h-4 text-gray-500" />
                 <span className="text-gray-600">/</span>
-                <span className="text-gray-400">Dashboard</span>
+                <span className="text-gray-400 capitalize">{pathname.split('/')[2] || 'Dashboard'}</span>
               </div>
             </div>
 
@@ -283,9 +301,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </header>
 
-        {/* Page content */}
-        <main className="p-4 sm:p-6 lg:p-8 pb-20 lg:pb-8">
-          {children}
+        {/* Page content with loading */}
+        <main className="p-4 sm:p-6 lg:p-8 pb-20 lg:pb-8 relative">
+          {isRouteLoading ? (
+            <div className="flex items-center justify-center min-h-[60vh]">
+              <Loader size="lg" text="Loading..." />
+            </div>
+          ) : (
+            <Suspense fallback={
+              <div className="flex items-center justify-center min-h-[60vh]">
+                <Loader size="lg" text="Loading..." />
+              </div>
+            }>
+              {children}
+            </Suspense>
+          )}
         </main>
       </div>
 
