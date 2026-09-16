@@ -130,8 +130,15 @@ const mockAchievements = [
     color: 'red',
   },
 ]
-
-const mockMilestones = [
+type Milestone = {
+  id: number
+  title: string
+  description: string
+  date: string
+  completed: boolean
+  type: 'start' | 'weight' | 'milestone' | 'goal'
+}
+const mockMilestones: Milestone[] = [
   {
     id: 1,
     title: 'Started Journey',
