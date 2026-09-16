@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { supabaseAdmin } from '@/lib/supabase/admin'
 import { onboardingSchema, type OnboardingPayload } from '@/schemas/onboarding.schema'
 
 export async function saveOnboardingDetails(payload: OnboardingPayload) {
@@ -12,9 +13,8 @@ export async function saveOnboardingDetails(payload: OnboardingPayload) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { error: 'Not authenticated' }
+
   const { error } = await supabase.from('onboarding_data').upsert({
-    // id: user,
-    // name:user.name,
     age: parsed.data.age,
     gender: parsed.data.gender,
     current_weight: parsed.data.currentWeight,
@@ -34,8 +34,19 @@ export async function saveOnboardingDetails(payload: OnboardingPayload) {
   })
 
   if (error) return { error: error.message }
-  return(
 
-    { success: true }
+  // Mark onboarding as done in app_metadata so middleware can check it
+  // without querying onboarding_data on every request.
+  const { error: metaError } = await supabaseAdmin.auth.admin.updateUserById(
+    user.id,
+    { app_metadata: { onboarding_done: true } }
   )
+
+  if (metaError) {
+    // The onboarding row was saved successfully — don't fail the whole
+    // action over this, but log it so you notice if it keeps happening.
+    console.error('Failed to set onboarding_done in app_metadata:', metaError.message)
+  }
+
+  return { success: true }
 }
